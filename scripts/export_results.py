@@ -86,6 +86,8 @@ def export(run, destination):
     shutil.copyfile(run / 'seed_42/comparison.png', destination / 'comparison.png')
     summary = (run / 'seed_42/summary.md').read_text(encoding='utf-8')
     (destination / 'summary.md').write_bytes(summary.encode('utf-8'))
+    for document in destination.glob('*.md'):
+        document.write_bytes(document.read_text(encoding='utf-8').encode('utf-8'))
     checksums = ''.join(
         f'{digest(path)}  {path.name}\n' for path in sorted(destination.iterdir())
         if path.is_file() and path.name != 'checksums.sha256')
