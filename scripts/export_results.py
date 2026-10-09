@@ -44,8 +44,8 @@ def export(run, destination):
     destination.mkdir(parents=True, exist_ok=True)
 
     def save(name, value):
-        (destination / name).write_text(json.dumps(portable(value), indent=2,
-                                                  allow_nan=False) + '\n', encoding='utf-8')
+        content = json.dumps(portable(value), indent=2, allow_nan=False) + '\n'
+        (destination / name).write_bytes(content.encode('utf-8'))
 
     records = []
     checkpoints = {}
@@ -84,10 +84,12 @@ def export(run, destination):
     save('checkpoint_hashes.json', checkpoints)
     save('status.json', read(run / 'status.json'))
     shutil.copyfile(run / 'seed_42/comparison.png', destination / 'comparison.png')
-    shutil.copyfile(run / 'seed_42/summary.md', destination / 'summary.md')
-    (destination / 'checksums.sha256').write_text(''.join(
+    summary = (run / 'seed_42/summary.md').read_text(encoding='utf-8')
+    (destination / 'summary.md').write_bytes(summary.encode('utf-8'))
+    checksums = ''.join(
         f'{digest(path)}  {path.name}\n' for path in sorted(destination.iterdir())
-        if path.is_file() and path.name != 'checksums.sha256'), encoding='utf-8')
+        if path.is_file() and path.name != 'checksums.sha256')
+    (destination / 'checksums.sha256').write_bytes(checksums.encode('utf-8'))
     print(f'Verified source, protocol, checkpoints, matched initialization, and metrics: {destination}')
 
 
