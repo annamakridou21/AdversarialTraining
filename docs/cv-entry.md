@@ -22,6 +22,3 @@ do not imply personal authorship of every later change.
 The numerical wording refers only to the completed corrected seed 42 experiment.
 Do not reuse the historical 76.44% / 36.40% claims or the 4.8M parameter count.
 Use the current report as a technical writing sample, not as a publication.
-
-The original CV YAML was on the Mac and was not part of the Windows transfer.
-This file supplies final project wording; it does not modify that external CV.
