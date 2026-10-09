@@ -28,3 +28,16 @@ output/
 # OS
 .DS_Store
 Thumbs.db
+
+# Local environments and CV drafts
+.venv/
+venv/
+.cv-draft/
+.pytest_cache/
+
+# LaTeX build intermediates
+*.aux
+*.log
+*.out
+*.synctex.gz
+main.pdf

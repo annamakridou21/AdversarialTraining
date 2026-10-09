@@ -1,0 +1,62 @@
+{
+  "profile": "full",
+  "protocol": {
+    "description": "Single-seed comparison with matched optimizer-update budgets; repeat with additional seeds before generalizing.",
+    "pretrain_epochs": 10,
+    "finetune_epochs": 5,
+    "pretrain_lr": 0.01,
+    "finetune_lr": 0.001,
+    "pretrain_milestones": [
+      6,
+      9
+    ],
+    "finetune_milestones": [
+      3,
+      4
+    ],
+    "batch_size": 128,
+    "validation_size": 5000,
+    "train_limit": null,
+    "eval_limit": null,
+    "train_steps": 10,
+    "validation_steps": 10,
+    "analysis_steps": 20,
+    "analysis_restarts": 5,
+    "epsilon": 0.01568627450980392,
+    "alpha": 0.00784313725490196,
+    "adv_ratio": 0.5,
+    "epsilons": [
+      0.00784313725490196,
+      0.01568627450980392,
+      0.023529411764705882,
+      0.03137254901960784
+    ]
+  },
+  "seeds": [
+    42
+  ],
+  "device": "cuda",
+  "num_workers": 0,
+  "data_dir": "data",
+  "protocol_sha256": "dc4675492737a6485d11b5334cd79062b45f03afd7ec2e3802eaf07e769e8601",
+  "source_sha256": {
+    "attacks.py": "5a5eb853dfac494f089f0072c16bf811c347e164095c1c8914c5bc89c0ec1b64",
+    "main_robust.py": "e13fca7591ab268d93cd7ed9c6e92ee53d16940df74ef14e61966b5a763f3dc2",
+    "main_standard.py": "82d9578e99c553efd3758bbb47e2cfbefeb7162cb3cf30f254bcdae2fb1df3ba",
+    "model_arch.py": "c4738ef5f0efdc6ca3ccc0aea12fe7cb7c2f1a347b190b94031bca21eede2a28",
+    "scripts/_common.py": "79081089adec4242b4f5e5c169169d2cf78484d3aefb9fd4ec4cb76b6c541936",
+    "scripts/analyze_robustness.py": "3b1246b8cd9f08769a1b4a651d21dc459da32953c16271eb62b48fdfd44ae03b",
+    "scripts/benchmark_training.py": "b7f6a95964efc7b15f0a730f21c73c682e595a2dcc1b3333413e151e1cb2fceb",
+    "scripts/compare_experiments.py": "fc80a2c47971150fa5ab557ca15363584ac7291b99a0bb613f56e0c23aa73246",
+    "scripts/create_attack_visualization.py": "80de9e41b32a3cacba22d23e24208901713a7721d7aaba70b723d0d686c208ba",
+    "scripts/create_comparison_plots.py": "d378b76057ef710236e9863b614fb1af1b6aaf0bbdd390486e776ce16a816c17",
+    "scripts/create_comparison_visualization.py": "fc80a2c47971150fa5ab557ca15363584ac7291b99a0bb613f56e0c23aa73246",
+    "scripts/create_summary_report.py": "b99b629373bc8e05c72f5ebe8849ba39b49131b4fcae364368fda97a322ef3fc",
+    "scripts/package_project.py": "c932f284cc91beedadedb73c81afdfee384f19bd52904009e0ec3ed0fa94a0da",
+    "scripts/plot_training.py": "def22ed73754002496eecac9eb7cd9965f7ce1a3948cbe95eb469b57e2d4bfac",
+    "scripts/run_experiment.py": "fe9c1e8b6bf41a4f4541893936632c13b247a98574e487a48068178b5501eaa9",
+    "scripts/visualize_attacks.py": "2cce4432ab2612fe583d1b320a8b3c03ef79302c95181a870b6b67b7f5aa787e",
+    "training.py": "710cdbec9bf1a03d87fa0b6e3da046480274e2a62e59ae4e0ba2927b0b234bea",
+    "utils.py": "eaa81ae3117e2bcaf697d88fca27439430e6825fbc22e6e11be3a7e0103a88af"
+  }
+}

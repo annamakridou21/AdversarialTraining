@@ -1,0 +1,103 @@
+{
+  "config": {
+    "data_dir": "data",
+    "output_dir": "output/experiments/full_cuda/seed_42/adversarial",
+    "epochs": 5,
+    "batch_size": 128,
+    "lr": 0.001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "dropout": 0.5,
+    "lr_milestones": [
+      3,
+      4
+    ],
+    "lr_gamma": 0.1,
+    "eval_epsilon": 0.01568627450980392,
+    "eval_alpha": 0.00784313725490196,
+    "eval_steps": 10,
+    "eval_restarts": 1,
+    "eval_freq": 1,
+    "num_workers": 0,
+    "save_freq": 25,
+    "seed": 42,
+    "device": "cuda",
+    "resume": null,
+    "pretrain_path": "output/experiments/full_cuda/seed_42/pretrain/models/standard_final.pth",
+    "skip_test": true,
+    "validation_size": 5000,
+    "train_limit": null,
+    "eval_limit": null,
+    "train_epsilon": 0.01568627450980392,
+    "train_alpha": 0.00784313725490196,
+    "train_steps": 10,
+    "adv_ratio": 0.5,
+    "training": "robust",
+    "input_space": "pixels_[0,1]",
+    "device_used": "cuda",
+    "torch_version": "2.11.0+cu128",
+    "python_version": "3.13.14",
+    "dependency_versions": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.2",
+      "tqdm": "4.70.1"
+    },
+    "pretrain_sha256": "b4993910a614869cb598fcfc56434575186aedf748dd48d3ae78d8eea56eb96d",
+    "sample_counts": {
+      "train": 45000,
+      "validation": 5000,
+      "test": 10000
+    }
+  },
+  "epochs": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "train_loss": [
+    1.7382961351394652,
+    1.5135289151509603,
+    1.4704457642449273,
+    1.4389469865163167,
+    1.4323943418714735
+  ],
+  "train_acc": [
+    24.322222222222223,
+    30.80666666666667,
+    32.53111111111111,
+    33.742222222222225,
+    33.64666666666667
+  ],
+  "validation_clean_acc": [
+    70.52,
+    70.68,
+    70.28,
+    71.38,
+    71.16
+  ],
+  "validation_robust_acc": [
+    31.18,
+    34.82,
+    36.7,
+    36.92,
+    36.84
+  ],
+  "learning_rate": [
+    0.001,
+    0.001,
+    0.001,
+    0.0001,
+    1e-05
+  ],
+  "epoch_seconds": [
+    135.61323840008117,
+    137.27521159988828,
+    135.41469329991378,
+    135.27469470002688,
+    135.0376883998979
+  ]
+}

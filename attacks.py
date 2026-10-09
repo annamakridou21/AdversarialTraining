@@ -1,145 +1,108 @@
-"""Adversarial Attack Implementations.
+"""Untargeted L-infinity attacks on images in pixel space [0, 1]."""
 
-Implements Projected Gradient Descent (PGD) attack from scratch
-to solve the inner maximization problem in robust optimization.
-"""
+from contextlib import contextmanager
+import math
 
 import torch
-import torch.nn as nn
+import torch.nn.functional as F
+
+
+@contextmanager
+def evaluating(model):
+    """Freeze dropout and batch statistics without changing the caller's mode."""
+    modes = [(module, module.training) for module in model.modules()]
+    model.eval()
+    try:
+        yield
+    finally:
+        for module, training in modes:
+            module.training = training
 
 
 class PGDAttack:
-    """Projected Gradient Descent (PGD) Attack.
-    
-    Solves the inner maximization problem:
-        max_{δ ∈ S} L(θ, x + δ, y)
-    where S = {δ : ||δ||_∞ ≤ ε}
-    
-    This is implemented via iterative gradient ascent with projection:
-        x_{t+1} = Π_S (x_t + α · sign(∇_x L(θ, x_t, y)))
+    """Projected gradient ascent with a random start and per-example selection.
+
+    Training uses selection='loss' to approximate the inner maximization.
+    Evaluation uses selection='success' to retain misclassified candidates,
+    breaking ties by cross-entropy. Both include the clean input as a candidate.
     """
-    
-    def __init__(self, model, epsilon=4/255, alpha=2/255, num_iter=10, device='cpu'):
-        """
-        Args:
-            model: Neural network model to attack
-            epsilon: Maximum perturbation bound (L-infinity norm)
-            alpha: Step size for each iteration
-            num_iter: Number of PGD iterations
-            device: Device to run attack on
-        """
-        self.model = model
-        self.epsilon = epsilon
-        self.alpha = alpha
-        self.num_iter = num_iter
-        self.device = device
-        self.criterion = nn.CrossEntropyLoss()
-        
+
+    def __init__(self, model, epsilon=4/255, alpha=2/255, num_iter=10,
+                 device='cpu', restarts=1, selection='success'):
+        if not math.isfinite(epsilon) or epsilon < 0:
+            raise ValueError('epsilon must be finite and non-negative')
+        if not math.isfinite(alpha) or alpha < 0:
+            raise ValueError('alpha must be finite and non-negative')
+        if not isinstance(num_iter, int) or num_iter < 1:
+            raise ValueError('num_iter must be a positive integer')
+        if not isinstance(restarts, int) or restarts < 1:
+            raise ValueError('restarts must be a positive integer')
+        if selection not in ('loss', 'success'):
+            raise ValueError("selection must be 'loss' or 'success'")
+        self.selection = selection
+        self.model, self.device = model, device
+        self.epsilon, self.alpha = epsilon, alpha
+        self.num_iter, self.restarts = num_iter, restarts
+
     def project(self, x_adv, x_natural):
-        """Project adversarial example onto feasible set.
-        
-        Projects onto the L-infinity ball: ||x_adv - x_natural||_∞ ≤ ε
-        Also ensures x_adv stays in valid image range [0, 1]
-        
-        Args:
-            x_adv: Adversarial examples
-            x_natural: Original natural examples
-            
-        Returns:
-            Projected adversarial examples
-        """
-        # Clamp perturbation to epsilon ball
-        delta = torch.clamp(x_adv - x_natural, -self.epsilon, self.epsilon)
-        # Add back to natural image and clamp to valid range
-        x_adv = torch.clamp(x_natural + delta, 0, 1)
-        return x_adv
-    
+        delta = (x_adv - x_natural).clamp(-self.epsilon, self.epsilon)
+        return (x_natural + delta).clamp(0, 1)
+
     def generate(self, x, y, random_start=True):
-        """Generate adversarial examples using PGD.
-        
-        Args:
-            x: Natural input images (batch_size, channels, height, width)
-            y: True labels (batch_size,)
-            random_start: Whether to start from random point in epsilon ball
-            
-        Returns:
-            Adversarial examples that maximize the loss
-        """
-        self.model.eval()
-        x = x.to(self.device)
-        y = y.to(self.device)
-        
-        # Initialize adversarial example
-        if random_start:
-            # Start from random point in epsilon ball
-            delta = torch.empty_like(x).uniform_(-self.epsilon, self.epsilon)
-            x_adv = torch.clamp(x + delta, 0, 1)
-        else:
-            # Start from natural example
-            x_adv = x.clone()
-        
-        # PGD iterations
-        for _ in range(self.num_iter):
-            x_adv.requires_grad = True
-            
-            # Forward pass
-            outputs = self.model(x_adv)
-            loss = self.criterion(outputs, y)
-            
-            # Backward pass to compute gradient
-            self.model.zero_grad()
-            loss.backward()
-            
-            # Gradient ascent step (maximize loss)
+        x, y = x.detach().to(self.device), y.to(self.device)
+        if x.numel() == 0 or not torch.isfinite(x).all() or x.min() < 0 or x.max() > 1:
+            raise ValueError('Attacks require finite pixel values in [0, 1]')
+        if self.epsilon == 0:
+            return x.clone()
+        with evaluating(self.model), torch.enable_grad():
             with torch.no_grad():
-                # Use sign of gradient for bounded perturbation
-                grad_sign = x_adv.grad.sign()
-                x_adv = x_adv + self.alpha * grad_sign
-                
-                # Project back onto feasible set
-                x_adv = self.project(x_adv, x)
-        
-        return x_adv.detach()
-    
+                logits = self.model(x)
+                best_loss = F.cross_entropy(logits, y, reduction='none')
+                best_wrong = logits.argmax(1).ne(y)
+                best = x.clone()
+            for _ in range(self.restarts):
+                candidate = x.clone()
+                if random_start:
+                    candidate = self.project(
+                        x + torch.empty_like(x).uniform_(-self.epsilon, self.epsilon), x)
+                for step in range(self.num_iter + 1):
+                    candidate = candidate.detach().requires_grad_(True)
+                    logits = self.model(candidate)
+                    losses = F.cross_entropy(logits, y, reduction='none')
+                    with torch.no_grad():
+                        wrong = logits.argmax(1).ne(y)
+                        replace = losses > best_loss
+                        if self.selection == 'success':
+                            replace = (wrong & ~best_wrong) | (
+                                (wrong == best_wrong) & replace)
+                        best[replace] = candidate[replace]
+                        best_loss[replace] = losses[replace]
+                        best_wrong[replace] = wrong[replace]
+                    if step < self.num_iter:
+                        # Input gradients leave parameter gradients untouched.
+                        gradient, = torch.autograd.grad(losses.sum(), candidate)
+                        candidate = self.project(
+                            candidate.detach() + self.alpha * gradient.sign(), x)
+        return best.detach()
+
     def __call__(self, x, y, random_start=True):
-        """Make the attack callable."""
         return self.generate(x, y, random_start)
 
 
-class FGSMAttack:
-    """Fast Gradient Sign Method (FGSM) Attack.
-    
-    A simpler one-step variant of PGD, useful for faster evaluation.
-    """
-    
+class FGSMAttack(PGDAttack):
+    """One gradient-sign step from the clean image, with no random start."""
+
     def __init__(self, model, epsilon=4/255, device='cpu'):
-        self.model = model
-        self.epsilon = epsilon
-        self.device = device
-        self.criterion = nn.CrossEntropyLoss()
-        
-    def generate(self, x, y):
-        """Generate adversarial examples using FGSM."""
-        self.model.eval()
-        x = x.to(self.device)
-        y = y.to(self.device)
-        
-        x_adv = x.clone().detach().requires_grad_(True)
-        
-        # Forward pass
-        outputs = self.model(x_adv)
-        loss = self.criterion(outputs, y)
-        
-        # Backward pass
-        self.model.zero_grad()
-        loss.backward()
-        
-        # One-step gradient ascent
-        with torch.no_grad():
-            x_adv = x_adv + self.epsilon * x_adv.grad.sign()
-            x_adv = torch.clamp(x_adv, 0, 1)
-        
-        return x_adv.detach()
-    
-    def __call__(self, x, y):
-        return self.generate(x, y)
+        super().__init__(model, epsilon, epsilon, 1, device)
+
+    def generate(self, x, y, random_start=False):
+        x, y = x.detach().to(self.device), y.to(self.device)
+        if x.numel() == 0 or not torch.isfinite(x).all() or x.min() < 0 or x.max() > 1:
+            raise ValueError('Attacks require finite pixel values in [0, 1]')
+        if self.epsilon == 0:
+            return x.clone()
+        with evaluating(self.model), torch.enable_grad():
+            candidate = x.clone().requires_grad_(True)
+            loss = F.cross_entropy(self.model(candidate), y)
+            gradient, = torch.autograd.grad(loss, candidate)
+        return (x + self.epsilon * gradient.sign()).clamp(0, 1).detach()

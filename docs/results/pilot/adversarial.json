@@ -1,0 +1,133 @@
+{
+  "format": "cifar10-pixel-space-v1",
+  "config": {
+    "checkpoint": "output/experiments/pilot/seed_42/adversarial/models/robust_best.pth",
+    "batch_size": 128,
+    "data_dir": "data",
+    "num_workers": 0,
+    "device": "mps",
+    "seed": 42,
+    "eval_limit": 512,
+    "steps": 10,
+    "restarts": 2,
+    "alpha": 0.00784313725490196,
+    "epsilons": [
+      0.00784313725490196,
+      0.01568627450980392,
+      0.023529411764705882,
+      0.03137254901960784
+    ],
+    "save_results": "output/experiments/pilot/seed_42/analysis/adversarial.json"
+  },
+  "evaluation_split": "test",
+  "attack_selection": "success",
+  "checkpoint": {
+    "sha256": "b93d3c99be6c4b1fc803d75f6fd8e3b5b30906bb7082c87beb127a16f75b4287",
+    "epoch": 1,
+    "training_config": {
+      "data_dir": "data",
+      "output_dir": "output/experiments/pilot/seed_42/adversarial",
+      "epochs": 1,
+      "batch_size": 128,
+      "lr": 0.001,
+      "momentum": 0.9,
+      "weight_decay": 0.0005,
+      "dropout": 0.5,
+      "lr_milestones": [
+        1
+      ],
+      "lr_gamma": 0.1,
+      "eval_epsilon": 0.01568627450980392,
+      "eval_alpha": 0.00784313725490196,
+      "eval_steps": 3,
+      "eval_restarts": 1,
+      "eval_freq": 1,
+      "num_workers": 0,
+      "save_freq": 25,
+      "seed": 42,
+      "device": "mps",
+      "resume": null,
+      "pretrain_path": "output/experiments/pilot/seed_42/pretrain/models/standard_final.pth",
+      "skip_test": true,
+      "validation_size": 5000,
+      "train_limit": 4096,
+      "eval_limit": 512,
+      "train_epsilon": 0.01568627450980392,
+      "train_alpha": 0.00784313725490196,
+      "train_steps": 3,
+      "adv_ratio": 0.5,
+      "training": "robust",
+      "input_space": "pixels_[0,1]",
+      "device_used": "mps",
+      "torch_version": "2.11.0",
+      "python_version": "3.14.3",
+      "dependency_versions": {
+        "torch": "2.11.0",
+        "torchvision": "0.26.0",
+        "numpy": "2.4.3",
+        "matplotlib": "3.10.9",
+        "tqdm": "4.67.3"
+      },
+      "pretrain_sha256": "92500ad230800e2d7efb09cd30a95f78569d98b39f68e91e31f69842a5c56cc6",
+      "sample_counts": {
+        "train": 4096,
+        "validation": 512,
+        "test": 512
+      }
+    }
+  },
+  "results": {
+    "0.00784313725490196": {
+      "total_samples": 512,
+      "clean_correct": 209,
+      "clean_accuracy": 40.8203125,
+      "clean_loss": 1.5353212654590607,
+      "adv_correct": 151,
+      "adv_accuracy": 29.4921875,
+      "robust_correct": 151,
+      "robust_accuracy": 29.4921875,
+      "adv_loss": 1.7716718316078186,
+      "successful_attacks": 58,
+      "attack_success_rate": 27.751196172248804
+    },
+    "0.01568627450980392": {
+      "total_samples": 512,
+      "clean_correct": 209,
+      "clean_accuracy": 40.8203125,
+      "clean_loss": 1.5353212654590607,
+      "adv_correct": 101,
+      "adv_accuracy": 19.7265625,
+      "robust_correct": 101,
+      "robust_accuracy": 19.7265625,
+      "adv_loss": 2.0306143164634705,
+      "successful_attacks": 108,
+      "attack_success_rate": 51.67464114832536
+    },
+    "0.023529411764705882": {
+      "total_samples": 512,
+      "clean_correct": 209,
+      "clean_accuracy": 40.8203125,
+      "clean_loss": 1.5353212654590607,
+      "adv_correct": 69,
+      "adv_accuracy": 13.4765625,
+      "robust_correct": 69,
+      "robust_accuracy": 13.4765625,
+      "adv_loss": 2.30286705493927,
+      "successful_attacks": 140,
+      "attack_success_rate": 66.98564593301435
+    },
+    "0.03137254901960784": {
+      "total_samples": 512,
+      "clean_correct": 209,
+      "clean_accuracy": 40.8203125,
+      "clean_loss": 1.5353212654590607,
+      "adv_correct": 48,
+      "adv_accuracy": 9.375,
+      "robust_correct": 48,
+      "robust_accuracy": 9.375,
+      "adv_loss": 2.571985363960266,
+      "successful_attacks": 161,
+      "attack_success_rate": 77.03349282296651
+    }
+  }
+}

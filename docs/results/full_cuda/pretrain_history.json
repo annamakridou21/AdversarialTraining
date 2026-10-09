@@ -1,0 +1,133 @@
+{
+  "config": {
+    "data_dir": "data",
+    "output_dir": "output/experiments/full_cuda/seed_42/pretrain",
+    "epochs": 10,
+    "batch_size": 128,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "dropout": 0.5,
+    "lr_milestones": [
+      6,
+      9
+    ],
+    "lr_gamma": 0.1,
+    "eval_epsilon": 0.01568627450980392,
+    "eval_alpha": 0.00784313725490196,
+    "eval_steps": 10,
+    "eval_restarts": 1,
+    "eval_freq": 1,
+    "num_workers": 0,
+    "save_freq": 25,
+    "seed": 42,
+    "device": "cuda",
+    "resume": null,
+    "pretrain_path": null,
+    "skip_test": true,
+    "validation_size": 5000,
+    "train_limit": null,
+    "eval_limit": null,
+    "training": "standard",
+    "input_space": "pixels_[0,1]",
+    "device_used": "cuda",
+    "torch_version": "2.11.0+cu128",
+    "python_version": "3.13.14",
+    "dependency_versions": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.2",
+      "tqdm": "4.70.1"
+    },
+    "sample_counts": {
+      "train": 45000,
+      "validation": 5000,
+      "test": 10000
+    }
+  },
+  "epochs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "train_loss": [
+    1.7019563031726412,
+    1.484932090504964,
+    1.3374343814637926,
+    1.218926889122857,
+    1.1185745147069295,
+    1.0611373081207276,
+    0.8896923001183404,
+    0.8493872285736932,
+    0.8246550950792101,
+    0.8027540264553494
+  ],
+  "train_acc": [
+    36.82888888888889,
+    45.90222222222222,
+    51.80444444444444,
+    56.724444444444444,
+    60.684444444444445,
+    62.89111111111111,
+    69.04666666666667,
+    70.28444444444445,
+    71.38444444444444,
+    72.06666666666666
+  ],
+  "validation_clean_acc": [
+    51.76,
+    55.3,
+    63.42,
+    62.08,
+    66.32,
+    71.22,
+    76.62,
+    77.26,
+    77.5,
+    78.08
+  ],
+  "validation_robust_acc": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "learning_rate": [
+    0.01,
+    0.01,
+    0.01,
+    0.01,
+    0.01,
+    0.01,
+    0.001,
+    0.001,
+    0.001,
+    0.0001
+  ],
+  "epoch_seconds": [
+    20.98923399997875,
+    19.896828400203958,
+    20.089710099855438,
+    19.628737800056115,
+    19.4192395999562,
+    19.011722299968824,
+    18.96867619990371,
+    19.098872100003064,
+    18.890169200021774,
+    19.04329780000262
+  ]
+}

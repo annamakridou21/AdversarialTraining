@@ -1,0 +1,99 @@
+{
+  "config": {
+    "data_dir": "data",
+    "output_dir": "output/experiments/full_cuda/seed_42/clean_control",
+    "epochs": 5,
+    "batch_size": 128,
+    "lr": 0.001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "dropout": 0.5,
+    "lr_milestones": [
+      3,
+      4
+    ],
+    "lr_gamma": 0.1,
+    "eval_epsilon": 0.01568627450980392,
+    "eval_alpha": 0.00784313725490196,
+    "eval_steps": 10,
+    "eval_restarts": 1,
+    "eval_freq": 1,
+    "num_workers": 0,
+    "save_freq": 25,
+    "seed": 42,
+    "device": "cuda",
+    "resume": null,
+    "pretrain_path": "output/experiments/full_cuda/seed_42/pretrain/models/standard_final.pth",
+    "skip_test": true,
+    "validation_size": 5000,
+    "train_limit": null,
+    "eval_limit": null,
+    "training": "standard",
+    "input_space": "pixels_[0,1]",
+    "device_used": "cuda",
+    "torch_version": "2.11.0+cu128",
+    "python_version": "3.13.14",
+    "dependency_versions": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.2",
+      "tqdm": "4.70.1"
+    },
+    "pretrain_sha256": "b4993910a614869cb598fcfc56434575186aedf748dd48d3ae78d8eea56eb96d",
+    "sample_counts": {
+      "train": 45000,
+      "validation": 5000,
+      "test": 10000
+    }
+  },
+  "epochs": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "train_loss": [
+    0.8070335918744405,
+    0.7912680586708917,
+    0.7679641358163621,
+    0.741815994866689,
+    0.7147458164321052
+  ],
+  "train_acc": [
+    71.87333333333333,
+    72.53333333333333,
+    73.28666666666666,
+    74.17777777777778,
+    75.00444444444445
+  ],
+  "validation_clean_acc": [
+    77.98,
+    78.6,
+    78.62,
+    79.02,
+    79.02
+  ],
+  "validation_robust_acc": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "learning_rate": [
+    0.001,
+    0.001,
+    0.001,
+    0.0001,
+    1e-05
+  ],
+  "epoch_seconds": [
+    19.27111710002646,
+    18.76429389999248,
+    18.80890169995837,
+    18.714986900100484,
+    18.84892120002769
+  ]
+}

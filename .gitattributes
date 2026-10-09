@@ -1,0 +1,11 @@
+# Preserve the exact source bytes recorded in experiment manifests.
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.tex text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+*.sha256 text eol=lf
+*.png binary
+*.pdf binary

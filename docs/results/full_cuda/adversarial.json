@@ -1,0 +1,134 @@
+{
+  "format": "cifar10-pixel-space-v1",
+  "config": {
+    "checkpoint": "output/experiments/full_cuda/seed_42/adversarial/models/robust_best.pth",
+    "batch_size": 128,
+    "data_dir": "data",
+    "num_workers": 0,
+    "device": "cuda",
+    "seed": 42,
+    "eval_limit": null,
+    "steps": 20,
+    "restarts": 5,
+    "alpha": 0.00784313725490196,
+    "epsilons": [
+      0.00784313725490196,
+      0.01568627450980392,
+      0.023529411764705882,
+      0.03137254901960784
+    ],
+    "save_results": "output/experiments/full_cuda/seed_42/analysis/adversarial.json"
+  },
+  "evaluation_split": "test",
+  "attack_selection": "success",
+  "checkpoint": {
+    "sha256": "1204386dcfcf2d81e610604387c1586ce59dc001bdf0d7d53c4b71c4f90ee67e",
+    "epoch": 4,
+    "training_config": {
+      "data_dir": "data",
+      "output_dir": "output/experiments/full_cuda/seed_42/adversarial",
+      "epochs": 5,
+      "batch_size": 128,
+      "lr": 0.001,
+      "momentum": 0.9,
+      "weight_decay": 0.0005,
+      "dropout": 0.5,
+      "lr_milestones": [
+        3,
+        4
+      ],
+      "lr_gamma": 0.1,
+      "eval_epsilon": 0.01568627450980392,
+      "eval_alpha": 0.00784313725490196,
+      "eval_steps": 10,
+      "eval_restarts": 1,
+      "eval_freq": 1,
+      "num_workers": 0,
+      "save_freq": 25,
+      "seed": 42,
+      "device": "cuda",
+      "resume": null,
+      "pretrain_path": "output/experiments/full_cuda/seed_42/pretrain/models/standard_final.pth",
+      "skip_test": true,
+      "validation_size": 5000,
+      "train_limit": null,
+      "eval_limit": null,
+      "train_epsilon": 0.01568627450980392,
+      "train_alpha": 0.00784313725490196,
+      "train_steps": 10,
+      "adv_ratio": 0.5,
+      "training": "robust",
+      "input_space": "pixels_[0,1]",
+      "device_used": "cuda",
+      "torch_version": "2.11.0+cu128",
+      "python_version": "3.13.14",
+      "dependency_versions": {
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.2",
+        "tqdm": "4.70.1"
+      },
+      "pretrain_sha256": "b4993910a614869cb598fcfc56434575186aedf748dd48d3ae78d8eea56eb96d",
+      "sample_counts": {
+        "train": 45000,
+        "validation": 5000,
+        "test": 10000
+      }
+    }
+  },
+  "results": {
+    "0.00784313725490196": {
+      "total_samples": 10000,
+      "clean_correct": 7059,
+      "clean_accuracy": 70.59,
+      "clean_loss": 0.9243239669799804,
+      "adv_correct": 5463,
+      "adv_accuracy": 54.63,
+      "robust_correct": 5463,
+      "robust_accuracy": 54.63,
+      "adv_loss": 1.2488888454437257,
+      "successful_attacks": 1596,
+      "attack_success_rate": 22.609434764130896
+    },
+    "0.01568627450980392": {
+      "total_samples": 10000,
+      "clean_correct": 7059,
+      "clean_accuracy": 70.59,
+      "clean_loss": 0.9243239669799804,
+      "adv_correct": 3582,
+      "adv_accuracy": 35.82,
+      "robust_correct": 3582,
+      "robust_accuracy": 35.82,
+      "adv_loss": 1.6835718606948853,
+      "successful_attacks": 3477,
+      "attack_success_rate": 49.25626859328517
+    },
+    "0.023529411764705882": {
+      "total_samples": 10000,
+      "clean_correct": 7059,
+      "clean_accuracy": 70.59,
+      "clean_loss": 0.9243239669799804,
+      "adv_correct": 2050,
+      "adv_accuracy": 20.5,
+      "robust_correct": 2050,
+      "robust_accuracy": 20.5,
+      "adv_loss": 2.259642039489746,
+      "successful_attacks": 5009,
+      "attack_success_rate": 70.95905935684941
+    },
+    "0.03137254901960784": {
+      "total_samples": 10000,
+      "clean_correct": 7059,
+      "clean_accuracy": 70.59,
+      "clean_loss": 0.9243239669799804,
+      "adv_correct": 1042,
+      "adv_accuracy": 10.42,
+      "robust_correct": 1042,
+      "robust_accuracy": 10.42,
+      "adv_loss": 2.993321913909912,
+      "successful_attacks": 6017,
+      "attack_success_rate": 85.23870236577419
+    }
+  }
+}
