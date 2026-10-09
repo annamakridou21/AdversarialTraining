@@ -119,7 +119,6 @@ to Overleaf. The existing PDF is ready to read without a LaTeX installation.
 | `tests/` | Attack, metric, training, and recovery regression tests |
 | `docs/results/full_cuda/` | Verified full-data measurements and provenance |
 | `docs/results/pilot/` | Earlier subset pilot, kept separate |
-| `docs/cv-entry.md` | Concise project wording for a CV |
 | `main.tex`, `report.pdf` | Current course report source and PDF |
 
 ## Scope and provenance
