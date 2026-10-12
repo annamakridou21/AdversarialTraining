@@ -29,7 +29,7 @@ def main(include_checkpoints):
     output = ROOT / 'output/release'
     output.mkdir(parents=True, exist_ok=True)
     suffixes = {'.py', '.md', '.json', '.yml', '.yaml', '.png', '.pdf', '.tex', '.txt', '.sha256', '.sh'}
-    source = [p for p in ROOT.iterdir() if p.is_file() and
+    source = [p for p in ROOT.iterdir() if p.is_file() and p.name != 'main.pdf' and
               (p.suffix in suffixes or p.name in ('.gitignore', '.gitattributes'))]
     for directory in ('.github', 'docs', 'experiments', 'scripts', 'tests'):
         source += [p for p in (ROOT / directory).rglob('*') if p.is_file()

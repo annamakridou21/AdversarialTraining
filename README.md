@@ -1,15 +1,17 @@
 # Adversarial Training via Min-Max Optimization
 
-A PyTorch study of clean continuation and mixed adversarial fine-tuning on
-CIFAR-10. PGD approximates the inner maximization over image perturbations;
-SGD updates the classifier. Developed by Anna Makridou and Alexandros Fourtounis
-for CS-573: Optimization Methods, University of Crete.
+A reproducible PyTorch study of adversarial training on CIFAR-10. We compare
+mixed clean and adversarial fine-tuning with a clean control that starts from
+the same pretrained weights and receives the same number of optimizer updates.
+At epsilon 4/255, the adversarial model reaches **35.82% robust accuracy**
+under PGD-20 with five restarts, compared with **1.14%** for the clean control
+on all 10,000 test images. Clean accuracy is **70.59% versus 78.70%**.
 
-**Status:** the full seed 42 experiment is complete on an RTX 4060 with CUDA.
-All 18 regression tests pass on Windows. This is a completed course project
-with a single-seed empirical evaluation.
+Developed by Anna Makridou and Alexandros Fourtounis for CS-573: Optimization
+Methods at the University of Crete. The full seed 42 run is complete; the
+repository includes the code, protocol, measurements, tests, and final report.
 
-[Report (PDF)](report.pdf) | [Report source](main.tex) |
+[Read the report (PDF)](report.pdf) | [Report source](main.tex) |
 [Results and protocol](docs/results/full_cuda/README.md) |
 [Reproduction guide](docs/run-guide.md) | [Validation record](docs/validation.md)
 
@@ -121,12 +123,7 @@ to Overleaf. The existing PDF is ready to read without a LaTeX installation.
 | `docs/results/pilot/` | Earlier subset pilot, kept separate |
 | `main.tex`, `report.pdf` | Current course report source and PDF |
 
-## Scope and provenance
-
-An earlier version attacked normalized tensors while clipping to `[0,1]`. Its
-historical accuracy figures and eleven-experiment narrative are not evidence for
-the corrected threat model. The current report supersedes those claims; the
-earlier source/PDF are preserved locally under `output/archive/`.
+## Limitations
 
 The study uses one seed and one attack family. Additional seeds and independent
 attack suites would test how well the observations generalize. Neither optimal

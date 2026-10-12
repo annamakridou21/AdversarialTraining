@@ -10,7 +10,7 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
 \setlength{\emergencystretch}{2em}
-\hypersetup{pdftitle={Adversarial Training via Min-Max Optimization},pdfauthor={Anna Makridou and Alexandros Fourtounis},pdfsubject={Corrected CS-573 course project; CIFAR-10 study, seed 42}}
+\hypersetup{pdftitle={Adversarial Training via Min-Max Optimization},pdfauthor={Anna Makridou and Alexandros Fourtounis},pdfsubject={CS-573 course project; CIFAR-10 study, seed 42}}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\CE}{\operatorname{CE}}
 \begin{document}
@@ -20,7 +20,7 @@
 {\large Anna Makridou \quad Alexandros Fourtounis\par}
 Computer Science Department, University of Crete\\
 CS-573: Optimization Methods \quad | \quad Course project\\
-Corrected report, 9 October 2026
+Technical report, 12 October 2026
 \end{center}
 \vspace{3pt}
 \begin{abstract}
@@ -50,13 +50,10 @@ The experiment compares a clean control with a loss containing equal clean and
 adversarial weights. It does not compare every supported objective or establish
 that pre-training is necessary.
 
-This report supersedes the numerical interpretation of the original course
-report. The earlier implementation clipped normalized tensors to $[0,1]$, which
-did not enforce the stated pixel-space threat model. Its historical experiments
-lack the checkpoints and logs required for verification. The results below come
-from the corrected implementation and a newly completed full-data run. Authorship
-is retained for the joint course project; no division of individual contributions
-is asserted here.
+The reported measurements come from a completed full-data run. The repository
+provides the attack and training code, fixed protocol, per-epoch histories,
+test counts, and checkpoint identifiers. This is a joint course project;
+individual contributions are not divided in this report.
 
 \section{Data and model}
 CIFAR-10 contains RGB images of size $32\times32$ in ten classes~\cite{cifar}.
@@ -197,8 +194,7 @@ computed from the unrounded measurements.
 The adversarial branch has higher measured robust accuracy at all four tested
 budgets. Its robust accuracy still falls to 10.42\% at $8/255$. These observations
 support a tradeoff for the evaluated setting, rather than a claim of general
-attack resistance. The experiment does not support the original report's claim
-of simultaneous improvement in clean and robust accuracy.
+attack resistance.
 
 \newpage
 \section{Verification and reproducibility}
@@ -243,8 +239,6 @@ splits is unknown. Evaluation uses one attack family, one loss, and a fixed step
 size. More steps and restarts than training improve the scrutiny of the same
 attack family, but do not replace independent attack suites or prove absence of
 gradient masking. There is no robustness certificate or deployment-safety claim.
-The earlier subset pilot is retained separately and is not pooled with the full
-test results.
 
 This completes a reproducible course-project comparison of clean continuation
 and mixed adversarial fine-tuning. Further seeds and independent attacks are

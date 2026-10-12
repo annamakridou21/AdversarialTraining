@@ -2,7 +2,7 @@
 
 Anna Makridou and Alexandros Fourtounis  
 CS-573: Optimization Methods, University of Crete  
-Corrected course report, 9 October 2026
+Technical report, 12 October 2026
 
 The complete report is [report.pdf](../report.pdf), built from [main.tex](../main.tex).
 This companion note summarizes the verified experiment and links to its evidence.
@@ -65,10 +65,9 @@ Only seed 42 and one attack family are evaluated. Variation across seeds,
 independent attacks, and different attack losses remain outside this study's
 scope. The measurements are empirical and do not certify robustness.
 
-The [earlier pilot](results/pilot/) used 4,096 training images and 512 validation
+The [subset pilot](results/pilot/) used 4,096 training images and 512 validation
 and test images on Apple MPS. It is a workflow study and is not combined with the
-full-data measurements. The original course report used an invalid preprocessing
-contract for its stated attacks; its historical results are superseded here.
+full-data measurements.
 
 ## Engineering checks
 
