@@ -11,7 +11,7 @@ Developed by Anna Makridou and Alexandros Fourtounis for CS-573: Optimization
 Methods at the University of Crete. The full seed 42 run is complete; the
 repository includes the code, protocol, measurements, tests, and final report.
 
-[Read the report (PDF)](report.pdf) | [Report source](main.tex) |
+[Read the report (PDF)](report.pdf) |
 [Results and protocol](docs/results/full_cuda/README.md) |
 [Reproduction guide](docs/run-guide.md) | [Validation record](docs/validation.md)
 
@@ -58,7 +58,7 @@ and a `16384 -> 512 -> 10` classifier: **9,356,554 trainable parameters**.
 
 The protocol uses 45,000 training images and 5,000 validation images, ten clean
 pre-training epochs, and five epochs for each branch. Branches have equal update
-budgets, not equal computation. See [the report](docs/report.md) for attack settings,
+budgets, not equal computation. See [the report](report.pdf) for attack settings,
 learning-rate schedules, checkpoint selection, and limitations.
 
 ## Reproduce
@@ -101,13 +101,10 @@ python -m scripts.verify_release
 protocol, and checkpoint hashes before exporting portable records. New tooling
 added after training is documented separately from the training-time source manifest.
 
-## Build the report
+## Report
 
-The source uses standard LaTeX packages and the measured comparison figure.
-From the repository root, run `tectonic main.tex` (Tectonic 0.17.0 was used), then
-rename the generated `main.pdf` to `report.pdf`. Alternatively, run
-`pdflatex main.tex` twice, or upload the source and `docs/results/full_cuda/comparison.png`
-to Overleaf. The existing PDF is ready to read without a LaTeX installation.
+The final report is distributed as [report.pdf](report.pdf), ready to read without
+a LaTeX installation. The LaTeX source is not included in this repository.
 
 ## Project files
 
@@ -121,7 +118,7 @@ to Overleaf. The existing PDF is ready to read without a LaTeX installation.
 | `tests/` | Attack, metric, training, and recovery regression tests |
 | `docs/results/full_cuda/` | Verified full-data measurements and provenance |
 | `docs/results/pilot/` | Earlier subset pilot, kept separate |
-| `main.tex`, `report.pdf` | Current course report source and PDF |
+| `report.pdf` | Final course report (PDF) |
 
 ## Limitations
 

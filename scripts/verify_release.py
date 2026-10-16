@@ -77,13 +77,9 @@ def verify():
                 continue
             local = unquote(target.split('#', 1)[0])
             require((path.parent / local).exists(), f'Broken link in {path.name}: {target}')
-    tex = (ROOT / 'main.tex').read_text(encoding='utf-8')
-    for name in re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}', tex):
-        require((ROOT / name).is_file(), f'Missing report figure: {name}')
-    for token in ('acmDOI', 'acmISBN', '76.44', '36.40', '4.8M', 'eleven experiments'):
-        require(token not in tex, f'Historical claim remains in report: {token}')
     report = ROOT / 'report.pdf'
-    require(report.read_bytes().startswith(b'%PDF-'), 'Compiled report is missing')
+    require(report.is_file(), 'Report PDF is missing: report.pdf')
+    require(report.read_bytes().startswith(b'%PDF-'), 'Invalid report PDF: report.pdf')
     summary = (RESULTS / 'summary.md').read_text(encoding='utf-8')
     for record in records:
         for metrics in record['results'].values():

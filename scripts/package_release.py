@@ -1,4 +1,4 @@
-"""Create a verified source release, report-source ZIP, and optional local run backup."""
+"""Create a verified source release, report ZIP, and optional local run backup."""
 
 import argparse
 import hashlib
@@ -36,8 +36,8 @@ def main(include_checkpoints):
                    and '__pycache__' not in p.parts and p.suffix in suffixes]
     archive(output / 'AdversarialTraining-source.zip',
             [(p, 'AdversarialTraining/' + p.relative_to(ROOT).as_posix()) for p in sorted(source)])
-    report_files = [ROOT / 'main.tex', ROOT / 'docs/results/full_cuda/comparison.png']
-    archive(output / 'AdversarialTraining-report-source.zip',
+    report_files = [ROOT / 'report.pdf', ROOT / 'docs/results/full_cuda/comparison.png']
+    archive(output / 'AdversarialTraining-report.zip',
             [(p, p.relative_to(ROOT).as_posix()) for p in report_files])
     if include_checkpoints:
         run = ROOT / 'output/experiments/full_cuda'

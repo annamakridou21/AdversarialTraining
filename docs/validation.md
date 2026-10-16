@@ -7,7 +7,7 @@ Completed study: 9 October 2026, seed 42, Windows / NVIDIA RTX 4060.
 The full run completed clean pre-training, a matched clean continuation, mixed
 adversarial fine-tuning, both full test analyses, and figure/report generation.
 Its completion marker and portable evidence are in [results/full_cuda/](results/full_cuda/).
-The [report](../report.pdf) and [source](../main.tex) describe those measurements.
+The [report](../report.pdf) describes those measurements.
 
 All 18 regression tests pass in the Windows Python 3.13.14 environment. CUDA
 was verified with PyTorch 2.11.0+cu128 and torchvision 0.26.0+cu128. The exact
@@ -56,9 +56,10 @@ the sandbox, with zero data-loader workers. This is an execution-environment
 restriction, not a failing project test.
 
 The release verifier checks exact metric counts, selected epochs, shared initial
-weights, exported checksums, training-time source hashes, and local Markdown and
-LaTeX references. The original local export additionally checks the model binary
-hashes. The final report is compiled and its rendered pages are visually checked.
+weights, exported checksums, training-time source hashes, local Markdown links,
+and the presence of the report PDF. The original local export additionally checks
+the model binary hashes. The final report is compiled and its rendered pages are
+visually checked.
 The Linux/Windows GitHub Actions workflow is included; a remote CI run has not
 been observed from this transfer copy.
 
